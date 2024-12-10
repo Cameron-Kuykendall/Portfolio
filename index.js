@@ -78,7 +78,10 @@ carousels.forEach((carousel) => {
   // Initialize the carousel position
   updateCarousel();
 });
-
+window.addEventListener("scroll", () => {
+  console.log(`Current scroll position: ${window.scrollY}`);
+  console.log(window.innerWidth);
+});
 ///header change
 const header1 = document.querySelector("#header-1");
 const header2 = document.querySelector("#header-2");
@@ -105,10 +108,19 @@ window.addEventListener("scroll", () => {
     header2.classList.remove("header-active")
     header4.classList.remove("header-active");
   }
-  if (window.scrollY > 4600) {
-    header4.classList.add("header-active")
-    header3.classList.remove("header-active");
-    header2.classList.remove("header-active");
+  if (window.innerWidth < 430) {
+    if (window.scrollY > 3700) {
+      header4.classList.add("header-active");
+      header3.classList.remove("header-active");
+      header2.classList.remove("header-active");
+      header1.classList.remove("header-active");
+    }
+  } else {
+    if (window.scrollY > 4600) {
+      header4.classList.add("header-active");
+      header3.classList.remove("header-active");
+      header2.classList.remove("header-active");
+    }
   }
 });
 
