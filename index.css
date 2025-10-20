@@ -91,8 +91,6 @@ body {
   animation-name: hvr-ripple-out;
 }
 
-
-
 .portfolio-main {
   display: flex;
   flex-direction: column;
@@ -459,7 +457,6 @@ video {
   justify-content: center;
   gap: 30px;
   text-align: justify;
-
 }
 .project-info-right {
   margin-left: 200px;

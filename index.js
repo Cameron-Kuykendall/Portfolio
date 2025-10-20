@@ -88,24 +88,23 @@ const header2 = document.querySelector("#header-2");
 const header3 = document.querySelector("#header-3");
 const header4 = document.querySelector("#header-4");
 
-
 window.addEventListener("scroll", () => {
   if (window.scrollY < 600) {
     header1.classList.add("header-active");
     header2.classList.remove("header-active");
     header3.classList.remove("header-active");
-    header4.classList.remove("header-active")
+    header4.classList.remove("header-active");
   }
 
   if (window.scrollY > 750 && window.scrollY < 1450) {
     header2.classList.add("header-active");
     header3.classList.remove("header-active");
     header1.classList.remove("header-active");
-    header4.classList.remove("header-active")
+    header4.classList.remove("header-active");
   }
   if (window.scrollY > 1450) {
     header3.classList.add("header-active");
-    header2.classList.remove("header-active")
+    header2.classList.remove("header-active");
     header4.classList.remove("header-active");
   }
   if (window.innerWidth < 430) {
@@ -145,15 +144,16 @@ document
         body: JSON.stringify({ name, email, message }),
       });
 
-        const data = await response.json().catch(() => ({ message: "" }));
-        if (response.ok) {
-          feedback.textContent = data.message || "Email sent successfully!";
-          feedback.style.color = "green";
-          e.target.reset();
-        } else {
-          feedback.textContent = data.message || "Failed to send email. Please try again.";
-          feedback.style.color = "red";
-        }
+      const data = await response.json().catch(() => ({ message: "" }));
+      if (response.ok) {
+        feedback.textContent = data.message || "Email sent successfully!";
+        feedback.style.color = "green";
+        e.target.reset();
+      } else {
+        feedback.textContent =
+          data.message || "Failed to send email. Please try again.";
+        feedback.style.color = "red";
+      }
     } catch (error) {
       feedback.textContent = "Failed to send email. Please try again.";
       feedback.style.color = "red";

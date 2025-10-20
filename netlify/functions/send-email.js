@@ -1,5 +1,7 @@
 // Load local env vars when running `netlify dev`
-try { require("dotenv").config(); } catch (_) {}
+try {
+  require("dotenv").config();
+} catch (_) {}
 
 const nodemailer = require("nodemailer");
 
@@ -10,28 +12,50 @@ exports.handler = async (event) => {
 
   // Enforce POST only
   if (event.httpMethod && event.httpMethod !== "POST") {
-    return { statusCode: 405, headers, body: JSON.stringify({ message: "Method Not Allowed" }) };
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ message: "Method Not Allowed" }),
+    };
   }
 
   try {
     if (!event.body) {
-      return { statusCode: 400, headers, body: JSON.stringify({ message: "Missing request body" }) };
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ message: "Missing request body" }),
+      };
     }
 
     const { name, email, message } = JSON.parse(event.body || "{}");
     if (!name || !email || !message) {
-      return { statusCode: 400, headers, body: JSON.stringify({ message: "Name, email, and message are required." }) };
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          message: "Name, email, and message are required.",
+        }),
+      };
     }
 
     const EMAIL_USER = process.env.EMAIL_USER;
     const EMAIL_PASS = process.env.EMAIL_PASS;
     const SMTP_HOST = process.env.SMTP_HOST || "smtp.gmail.com";
-    const SMTP_PORT = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 465;
-    const SMTP_SECURE = process.env.SMTP_SECURE ? process.env.SMTP_SECURE === "true" : true;
+    const SMTP_PORT = process.env.SMTP_PORT
+      ? Number(process.env.SMTP_PORT)
+      : 465;
+    const SMTP_SECURE = process.env.SMTP_SECURE
+      ? process.env.SMTP_SECURE === "true"
+      : true;
 
     if (!EMAIL_USER || !EMAIL_PASS) {
       console.error("Missing EMAIL_USER/EMAIL_PASS environment variables");
-      return { statusCode: 500, headers, body: JSON.stringify({ message: "Email service is not configured." }) };
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ message: "Email service is not configured." }),
+      };
     }
 
     // Set up the Nodemailer transporter (use Gmail with App Password or your SMTP provider)
