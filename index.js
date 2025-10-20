@@ -145,11 +145,15 @@ document
         body: JSON.stringify({ name, email, message }),
       });
 
-      const data = await response.json();
-      feedback.textContent = data.message;
-      feedback.style.color = "green";
-
-      e.target.reset();
+        const data = await response.json().catch(() => ({ message: "" }));
+        if (response.ok) {
+          feedback.textContent = data.message || "Email sent successfully!";
+          feedback.style.color = "green";
+          e.target.reset();
+        } else {
+          feedback.textContent = data.message || "Failed to send email. Please try again.";
+          feedback.style.color = "red";
+        }
     } catch (error) {
       feedback.textContent = "Failed to send email. Please try again.";
       feedback.style.color = "red";
